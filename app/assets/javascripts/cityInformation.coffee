@@ -62,7 +62,7 @@ data.push
     image: 'http://img.getyourguide.com/img/tour_img-118796-21.jpg'
     url: 'http://www.getyourguide.com/london-l57/skip-the-line-tower-of-london-t21253/'
   toDo:
-    title: 'Shakespeare's Globe Theater'
+    title: 'Shakespeare\'s Globe Theater'
     image: 'http://img.getyourguide.com/img/tour_img-118793-21.jpg'
     url: 'http://www.getyourguide.com/london-l57/skip-the-line-tower-of-london-t21253/'
   toEat:

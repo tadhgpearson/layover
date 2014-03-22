@@ -1,5 +1,7 @@
 @Playover = @Playover ? {}
 
+cityInformation = @cityInformation
+
 class @Playover.Detail extends EventEmitter
   constructor: (@el) ->
     super()
@@ -7,7 +9,29 @@ class @Playover.Detail extends EventEmitter
   
   setData: (@data) ->
     @details.html ''
-    @details.html JSON.stringify @data
+    
+    stops = _.map @data.segments, (segment) ->
+      iata: segment.from.iata
+      fromTime: segment.fromTime
+      toTime: segment.toTime
+      playover: false
+      duration: 0
+    
+    last = @data.segments[@data.segments.length - 1]
+    stops.push
+      iata: last.to.iata
+      fromTime: last.toTime
+      toTime: last.toTime
+      playover: false
+      duration: 0
+    
+    for i in [1..stops.length-1] by 1
+      stops[i].duration = Math.abs stops[i].fromTime.getTime() - stops[i-1].toTime.getTime()
+    
+    sorted = _.sortBy stops, (stop) -> -stop.duration
+    longestLayover = sorted[0]
+    
+    @details.html JSON.stringify longestLayover
   
   show: =>
     @el.show()

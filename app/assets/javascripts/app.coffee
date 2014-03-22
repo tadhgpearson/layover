@@ -99,17 +99,18 @@ class @Playover.App
     @detail.hide()
     @results.hide()
     
-    @search.on 'change', @updateSearch
+    @search.on 'change', =>
+      @searching()
+      @updateSearch data
     @results.on 'select', @updateSelection
   
-  updateSearch: =>
+  searching: =>
     @results.hide()
     @detail.hide()
-    
-    setTimeout =>
-      @results.setItems data
-      @results.show()
-    , 50
+  
+  updateSearch: (data) =>
+    @results.setItems data
+    @results.show()
   
   updateSelection: (data) =>
     console.log 'updateSelection!', data

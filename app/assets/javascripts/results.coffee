@@ -1,5 +1,7 @@
 @Playover = @Playover ? {}
 
+cityInformation = @cityInformation
+
 class @Playover.Results extends EventEmitter
   constructor: (@el) ->
     super()
@@ -24,7 +26,8 @@ class @Playover.Results extends EventEmitter
       result = new Result item
       result.on 'select', =>
         @emit 'select', result.data
-      @results.append result.el
+      if result.added
+        @results.append result.el
   
   show: =>
     @el.show()
@@ -46,10 +49,12 @@ class Result extends EventEmitter
     @el.click =>
       @emit 'select'
     
+    @added = true
     if @data.segments.length > 1
-      @hasLayover()
+      @added = @hasLayover()
     else
       @isDirect()
+      @added = true
   
   hasLayover: =>
     stops = _.map @data.segments, (segment) ->
@@ -73,6 +78,11 @@ class Result extends EventEmitter
     sorted = _.sortBy stops, (stop) -> -stop.duration
     longestLayover = sorted[0]
     
+    info = _.find cityInformation, (city) ->
+      city.iata == longestLayover.iata
+    
+    return false unless info
+    
     price = $ '<div class="result-price">'
     price.html "$#{@data.price}"
     @el.append price
@@ -93,6 +103,8 @@ class Result extends EventEmitter
     
     cities[0].addClass 'stop-label-origin'
     cities[cities.length-1].addClass 'stop-label-destination'
+    
+    true
   
   isDirect: =>
     price = $ '<div class="result-price">'
