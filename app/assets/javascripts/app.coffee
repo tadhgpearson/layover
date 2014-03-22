@@ -39,6 +39,24 @@ data.push
     toTime: new Date(Date.now() + 7*DAYS + 14*HOURS)
   }]
 data.push
+  price: 670
+  segments: [{
+    from: getAirport 'BOS'
+    to: getAirport 'JFK'
+    fromTime: new Date(Date.now() + 7*DAYS)
+    toTime: new Date(Date.now() + 7*DAYS + 0.5*HOURS)
+  }, {
+    from: getAirport 'JFK'
+    to: getAirport 'LHR'
+    fromTime: new Date(Date.now() + 7*DAYS + 1*HOURS)
+    toTime: new Date(Date.now() + 7*DAYS + 5.5*HOURS)
+  }, {
+    from: getAirport 'LHR'
+    to: getAirport 'DXB'
+    fromTime: new Date(Date.now() + 7*DAYS + 13*HOURS)
+    toTime: new Date(Date.now() + 7*DAYS + 15*HOURS)
+  }]
+data.push
   price: 620
   segments: [{
     from: getAirport 'BOS'
@@ -91,7 +109,7 @@ class @Playover.App
     setTimeout =>
       @results.setItems data
       @results.show()
-    , 500
+    , 50
   
   updateSelection: (data) =>
     console.log 'updateSelection!', data
@@ -101,4 +119,4 @@ class @Playover.App
     setTimeout =>
       @detail.setData data
       @detail.show()
-    , 500
+    , 50
