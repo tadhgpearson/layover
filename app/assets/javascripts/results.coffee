@@ -1,5 +1,7 @@
 @Playover = @Playover ? {}
 
+cityInformation = @cityInformation
+
 class @Playover.Results extends EventEmitter
   constructor: (@el) ->
     super()
@@ -24,7 +26,8 @@ class @Playover.Results extends EventEmitter
       result = new Result item
       result.on 'select', =>
         @emit 'select', result.data
-      @results.append result.el
+      if result.added
+        @results.append result.el
   
   show: =>
     @el.show()
@@ -46,14 +49,39 @@ class Result extends EventEmitter
     @el.click =>
       @emit 'select'
     
+    @added = true
     if @data.segments.length > 1
-      @hasLayover()
+      @added = @hasLayover()
     else
       @isDirect()
+      @added = true
   
   hasLayover: =>
-    stops = _.map @data.segments, (segment) -> segment.from.iata
-    stops.push @data.segments[@data.segments.length - 1].to.iata
+    stops = _.map @data.segments, (segment) ->
+      iata: segment.from.iata
+      fromTime: segment.fromTime
+      toTime: segment.toTime
+      playover: false
+      duration: 0
+    
+    last = @data.segments[@data.segments.length - 1]
+    stops.push
+      iata: last.to.iata
+      fromTime: last.toTime
+      toTime: last.toTime
+      playover: false
+      duration: 0
+    
+    for i in [1..stops.length-1] by 1
+      stops[i].duration = Math.abs stops[i].fromTime.getTime() - stops[i-1].toTime.getTime()
+    
+    sorted = _.sortBy stops, (stop) -> -stop.duration
+    longestLayover = sorted[0]
+    
+    info = _.find cityInformation, (city) ->
+      city.iata == longestLayover.iata
+    
+    return false unless info
     
     price = $ '<div class="result-price">'
     price.html "$#{@data.price}"
@@ -64,19 +92,27 @@ class Result extends EventEmitter
     
     cities = []
     for stop in stops
-      cityName = "#{stop}"
+      cityName = "#{stop.iata}"
       city = $ '<div>'
       city.addClass 'stop-label'
+      if stop.iata == longestLayover.iata
+        city.addClass 'stop-label-playover'
       city.html "<span>#{cityName}</span>"
       cities.push city
       container.append city
+    
     cities[0].addClass 'stop-label-origin'
     cities[cities.length-1].addClass 'stop-label-destination'
+    
+    true
   
   isDirect: =>
-    price = @data.price
+    price = $ '<div class="result-price">'
+    price.html "$#{@data.price}"
+    @el.append price
+    
     title = "#{@data.segments[0].from.iata}-#{@data.segments[0].to.iata}"
     titleEl = $ '<h4>'
-    titleEl.html "Non-stop #{title} $#{price}"
+    titleEl.html "Non-stop #{title}"
     
     @el.append titleEl
