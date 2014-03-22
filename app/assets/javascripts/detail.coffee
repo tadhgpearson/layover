@@ -31,7 +31,12 @@ class @Playover.Detail extends EventEmitter
     sorted = _.sortBy stops, (stop) -> -stop.duration
     longestLayover = sorted[0]
     
-    @details.html JSON.stringify longestLayover
+    info = _.find cityInformation, (city) ->
+      city.iata == longestLayover.iata
+    
+    title = $ '<h3>'
+    title.html "Explore #{info.title}"
+    @details.append title
   
   show: =>
     @el.show()
