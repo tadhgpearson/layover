@@ -41,6 +41,42 @@ public class Segment {
 
 
 
+	public String getAirline() {
+		return airline;
+	}
+
+
+
+	public String getFlightNumber() {
+		return flightNumber;
+	}
+
+
+
+	public DateTime getDeparts() {
+		return departs;
+	}
+
+
+
+	public String getOrigin() {
+		return origin;
+	}
+
+
+
+	public DateTime getArrives() {
+		return arrives;
+	}
+
+
+
+	public String getDestination() {
+		return destination;
+	}
+
+
+
 	public JsonNode toJSON() {
 		ObjectNode out = Json.newObject();
 		out.put("airline", airline);

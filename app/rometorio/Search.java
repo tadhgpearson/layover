@@ -11,6 +11,7 @@ import java.util.List;
 import model.SearchResult;
 import model.Segment;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -29,14 +30,14 @@ public class Search {
 	
 	private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormat.forPattern("yyMMddHHmm");
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyMMdd");
-	static final private String KEY = "PMrNXeaI";
 	
 	static public List<SearchResult> flights(String origin, String destination, DateTime departure, DateTime ret){
 		WSRequestHolder rq = buildRequest(origin, destination, departure, ret);
 
-		JsonNode rs = rq.get().get(10000).asJson();
+		JsonNode rs = rq.get().get(18000).asJson();
 		
 		List<SearchResult> results = parseResponse(rs, origin, destination);
+		CollectionUtils.filter(results, new StopOverPredicate());
 		
 		return results;
 	}
@@ -105,6 +106,7 @@ public class Search {
 		rq.setQueryParameter("departureDate", DATE_FORMAT.print(departure));
 		rq.setQueryParameter("returnDate", DATE_FORMAT.print(ret));
 		rq.setQueryParameter("adtNb", "1");
+		rq.setQueryParameter("recNb", "499");
 		return rq;
 	}
 

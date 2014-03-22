@@ -19,13 +19,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class SearchResult {
 	
-	String origin;
-	String destination;
+	final String origin;
+	final String destination;
 	
-	List<Segment> outbound;
+	final List<Segment> outbound;
 	
-	String price;
-	String currency;
+	final String price;
+	final String currency;
 	
 	public SearchResult(String origin, String destination, List<Segment> outbound, String price, String currency) {
 		super();
@@ -35,6 +35,12 @@ public class SearchResult {
 		this.price = price;
 		this.currency = currency;
 	}
+
+	public List<Segment> getOutbound() {
+		return outbound;
+	}
+
+
 
 	public JsonNode toJSON() {
 		ObjectNode out = Json.newObject();
