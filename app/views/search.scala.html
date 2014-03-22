@@ -2,13 +2,13 @@
   <h3>Search</h3>
   <form>
   <p>
-    From: <input class="origin" type="text" name="origin">
+    From: <input class="origin" type="text" name="origin" value="BOS">
   </p>
   <p>
-    To: <input class="destination" type="text" name="destination">
+    To: <input class="destination" type="text" name="destination" value="DXB">
   </p>
   <p>
-    on: <input class="departureDate" type="text" name="departureDate">
+    on: <input class="departureDate" type="text" name="departureDate" value="2014-05-23">
   </p>
   <p>
     <button class="btn btn-default btn-search">go</button>
@@ -16,12 +16,17 @@
   </form>
 </div>
 <script>
-$('.btn-search').click(function() {
-	$('.origin').val();
-	$('.destination').val();
-	$('.departureDate').val();
-	$.getJSON('flights/?origin='+origin +'&destination=' +destination +'&departureDate=' +departureDate, function(data){
-		$playover.updateSearch([]);
+$('.btn-search').click(function(e) {
+  e.preventDefault()
+	var origin = $('.origin').val();
+	var destination = $('.destination').val();
+	var departureDate = $('.departureDate').val();
+	var url = '/flights?origin='+origin +'&destination=' +destination +'&departureDate=' +departureDate;
+	//url = "http://localhost:9000/assets/javascripts/flights.json"
+	$.getJSON(url, function(data){
+	  console.log(data);
+		playover.updateSearch(data.results);
 	});
+	return false;
 })
 </script>

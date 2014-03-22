@@ -10,6 +10,7 @@ names =
   ZRH: 'Zürich'
   LHR: 'London'
   DXB: 'Dubai'
+  AMS: 'Amsterdam'
 
 getAirport = (iata) ->
   obj =
@@ -101,7 +102,7 @@ class @Playover.App
     
     @search.on 'change', =>
       @searching()
-      @updateSearch data
+      #@updateSearch data
     @results.on 'select', @updateSelection
   
   searching: =>
@@ -109,7 +110,33 @@ class @Playover.App
     @detail.hide()
   
   updateSearch: (data) =>
-    @results.setItems data
+    
+    price: 630
+    segments: [{
+      from: getAirport 'BOS'
+      to: getAirport 'LHR'
+      fromTime: new Date(Date.now() + 7*DAYS)
+      toTime: new Date(Date.now() + 7*DAYS + 4.5*HOURS)
+    }, {
+      from: getAirport 'LHR'
+      to: getAirport 'DXB'
+      fromTime: new Date(Date.now() + 7*DAYS + 12*HOURS)
+      toTime: new Date(Date.now() + 7*DAYS + 14*HOURS)
+    }]
+    
+    newData = _.map data, (result) ->
+      obj =
+        price: parseInt result.price
+      obj.segments = _.map result.segments, (seg) ->
+        seg.from = getAirport seg.origin
+        seg.to = getAirport seg.destination
+        seg.fromTime = new Date seg.departs
+        seg.toTime = new Date seg.arrives
+        seg
+      obj
+    
+    console.log 'newData', newData
+    @results.setItems newData
     @results.show()
   
   updateSelection: (data) =>

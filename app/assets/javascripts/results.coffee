@@ -81,6 +81,8 @@ class Result extends EventEmitter
     info = _.find cityInformation, (city) ->
       city.iata == longestLayover.iata
     
+    unless info
+      console.log 'no info for', longestLayover
     return false unless info
     
     price = $ '<div class="result-price">'
