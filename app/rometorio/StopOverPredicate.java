@@ -19,7 +19,7 @@ public class StopOverPredicate implements Predicate<SearchResult> {
 		if(segs.size() == 1){
 			out = true;
 		}
-		else if(segs.size() == 2){
+		else if(segs.size() >= 2){
 			out = false;
 			for (int i = 0; i < segs.size() - 1 ; i++) {
 				DateTime arrives = segs.get(i).getArrives();
