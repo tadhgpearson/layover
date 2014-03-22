@@ -22,7 +22,7 @@ $('.btn-search').click(function(e) {
 	var destination = $('.destination').val();
 	var departureDate = $('.departureDate').val();
 	var url = '/flights?origin='+origin +'&destination=' +destination +'&departureDate=' +departureDate;
-	url = "http://localhost:9000/assets/javascripts/flights.json"
+	//url = "http://localhost:9000/assets/javascripts/flights.json"
 	$.getJSON(url, function(data){
 	  console.log(data);
 		playover.updateSearch(data.results);
