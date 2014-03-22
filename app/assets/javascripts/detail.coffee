@@ -40,6 +40,15 @@ class @Playover.Detail extends EventEmitter
     title.html "Explore #{info.title} in #{hours} hours"
     @details.append title
     
+    price = $ '<h3 style="float: right; margin: 0px;">'
+    price.html "$#{@data.price}"
+    @details.append price
+    
+    for seg in @data.segments
+      row = $ '<div>'
+      row.html "<strong>#{seg.from.iata}</strong> #{moment(seg.fromTime).format('h:mma')} - <strong>#{seg.to.iata}</strong> #{moment(seg.toTime).format('h:mma')} #{seg.airline}#{seg.flight_number}"
+      @details.append row
+    
     act = $ '<div>'
     title = info.toSee.title
     image = info.toSee.image

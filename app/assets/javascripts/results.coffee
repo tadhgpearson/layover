@@ -83,6 +83,7 @@ class Result extends EventEmitter
     
     unless info
       console.log 'no info for', longestLayover
+    
     return false unless info
     
     price = $ '<div class="result-price">'
