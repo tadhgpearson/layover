@@ -1,7 +1,14 @@
 @(message: String)
 
 @main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
+    
+    <div class='.playover'>
+      @search.render()
+      @results.render()
+      @detail.render()
+    </div>
+    <script>
+    var playover = new Playover.App('.page');
+    </script>
 
 }
