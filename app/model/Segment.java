@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class Segment {
 	
-	private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-mm-dd'T'HH:MM");
+	private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm");
 	String airline;
 	String flightNumber;
 	DateTime departs;
@@ -53,4 +53,13 @@ public class Segment {
 	}
 
 
+
+	@Override
+	public String toString() {
+		return "Segment [airline=" + airline + ", flightNumber=" + flightNumber
+				+ ", departs=" + departs + ", origin=" + origin + ", arrives="
+				+ arrives + ", destination=" + destination + "]";
+	}
+
+	
 }

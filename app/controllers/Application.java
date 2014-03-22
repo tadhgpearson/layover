@@ -13,13 +13,12 @@ import play.mvc.Result;
 import rometorio.Search;
 import views.html.index;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Application extends Controller {
 
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyyy-mm-dd");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd");
 
 	public static Result index() {
         return ok(index.render("Your new application is ready."));
