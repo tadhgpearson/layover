@@ -1,15 +1,27 @@
 <div class="view-search col-sm-4 col-md-4">
   <h3>Search</h3>
+  <form>
   <p>
-    From: <input>
+    From: <input class="origin" type="text" name="origin">
   </p>
   <p>
-    To: <input>
+    To: <input class="destination" type="text" name="destination">
   </p>
   <p>
-    on: <input>
+    on: <input class="departureDate" type="text" name="departureDate">
   </p>
   <p>
     <button class="btn btn-default btn-search">go</button>
   </p>
+  </form>
 </div>
+<script>
+$('.btn-search').click(function() {
+	$('.origin').val();
+	$('.destination').val();
+	$('.departureDate').val();
+	$.getJSON('flights/?origin='+origin +'&destination=' +destination +'&departureDate=' +departureDate, function(data){
+		$playover.updateSearch([]);
+	});
+})
+</script>
