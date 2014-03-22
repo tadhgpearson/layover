@@ -48,5 +48,13 @@ public class SearchResult {
 		out.put("currency", currency);
 		return out;
 	}
+
+	@Override
+	public String toString() {
+		return "SearchResult [origin=" + origin + ", destination="
+				+ destination + ", outbound=" + outbound + ", price=" + price
+				+ ", currency=" + currency + "]";
+	}
+	
 	
 }
