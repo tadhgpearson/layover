@@ -34,9 +34,15 @@ class @Playover.Detail extends EventEmitter
     info = _.find cityInformation, (city) ->
       city.iata == longestLayover.iata
     
+    hours = Math.round longestLayover.duration / 1000 / 60 / 60
+    
     title = $ '<h3>'
     title.html "Explore #{info.title}"
     @details.append title
+    
+    time = $ '<h4>'
+    time.html "#{hours} hours"
+    @details.append time
   
   show: =>
     @el.show()
