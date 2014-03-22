@@ -20,10 +20,13 @@ public class StopOverPredicate implements Predicate<SearchResult> {
 			out = true;
 		}
 		else if(segs.size() == 2){
-			DateTime arrives = segs.get(0).getArrives();
-			DateTime departs = segs.get(1).getDeparts();
-			Duration stopoverDuration = new Duration(arrives, departs);
-			out = Duration.standardHours(4).isShorterThan(stopoverDuration);
+			out = false;
+			for (int i = 0; i < segs.size() - 1 ; i++) {
+				DateTime arrives = segs.get(i).getArrives();
+				DateTime departs = segs.get(i+1).getDeparts();
+				Duration stopoverDuration = new Duration(arrives, departs);
+				out |= Duration.standardHours(5).isShorterThan(stopoverDuration);
+			}
 		}
 		else{
 			out = false;

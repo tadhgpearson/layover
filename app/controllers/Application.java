@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.SearchResult;
 
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -24,9 +25,11 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
     
-    public static Result flightSearch(String origin, String destination, String departureDate, String arrivalDate){
+    public static Result flightSearch(String origin, String destination, String departureDate){
     	ObjectNode out = Json.newObject();
-    	List<SearchResult> results = Search.flights(origin, destination, DATE_FORMAT.parseDateTime(departureDate), DATE_FORMAT.parseDateTime(arrivalDate));
+    	DateTime departs = DATE_FORMAT.parseDateTime(departureDate);
+    	DateTime returns = departs.plusDays(15);
+		List<SearchResult> results = Search.flights(origin, destination, departs, returns);
     	ArrayNode aResults = out.putArray("results");
 		for (SearchResult r : results) {
 			aResults.add(r.toJSON());
