@@ -37,12 +37,26 @@ class @Playover.Detail extends EventEmitter
     hours = Math.round longestLayover.duration / 1000 / 60 / 60
     
     title = $ '<h3>'
-    title.html "Explore #{info.title}"
+    title.html "Explore #{info.title} in #{hours} hours"
     @details.append title
     
-    time = $ '<h4>'
-    time.html "#{hours} hours"
-    @details.append time
+    act = $ '<div>'
+    title = info.toSee.title
+    image = info.toSee.image
+    act.html "<h4>#{title}</h4><img style='width: 50%;' src='#{image}' />"
+    @details.append act
+    
+    act = $ '<div>'
+    title = info.toDo.title
+    image = info.toDo.image
+    act.html "<h4>#{title}</h4><img style='width: 50%;' src='#{image}' />"
+    @details.append act
+    
+    act = $ '<div>'
+    title = info.toEat.title
+    image = info.toEat.image
+    act.html "<h4>#{title}</h4><img style='width: 50%;' src='#{image}' />"
+    @details.append act
   
   show: =>
     @el.show()
