@@ -48,11 +48,18 @@ public class Search {
 			List<Segment> segs = new ArrayList<Segment>();
 			
 			//Navigate tedious structure dirtily
-			for(JsonNode flight : rec.path("sols").path("sol").path("outbound").path("flights").path("flight")){
-				if(flight.hasNonNull("dd")){
-					Segment seg = parseFlight(flight);
-					segs.add(seg);
+			JsonNode flightList = rec.path("sols").path("sol").path("outbound").path("flights").path("flight");
+			if(flightList.isArray()){
+				for(JsonNode flight : flightList){
+					if(flight.hasNonNull("dd")){
+						Segment seg = parseFlight(flight);
+						segs.add(seg);
+					}
 				}
+			}
+			//Hack for direct flights
+			else if(flightList.hasNonNull("dd")){
+				segs.add(parseFlight(flightList));
 			}
 			
 			String price = rec.get("prices").get("price").get("fare").asText();
