@@ -8,7 +8,7 @@
     To: <input class="destination" type="text" name="destination" value="DXB">
   </p>
   <p>
-    on: <input class="departureDate" type="text" name="departureDate" value="2014-05-23">
+    on: <input class="departureDate" type="text" name="departureDate" value="@{new org.joda.time.LocalDate().plusWeeks(3).toString()}">
   </p>
   <p>
     <button class="btn btn-default btn-search">go</button>
