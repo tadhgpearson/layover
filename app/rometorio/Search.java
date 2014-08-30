@@ -5,7 +5,6 @@ package rometorio;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import model.SearchResult;
@@ -16,8 +15,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import play.libs.WS;
-import play.libs.WS.WSRequestHolder;
+import play.libs.ws.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
