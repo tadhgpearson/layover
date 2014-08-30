@@ -8,7 +8,9 @@ Installing Playover
 To run the app server, you need Java 1.8.5 or better, and Typesafe Activator Play Framework (http://www.playframework.com) v2.3.3. The minimal version is fine.
 
 Install both and ensure that activator.bat or activator.sh is on your path. Then do
+
 >activator start
+
 from this folder (the one with this readme your are reading right now) in it to start the app, which can be accessed at `localhost:9000`
 
 Using Playover
