@@ -11,7 +11,7 @@ import org.joda.time.format.DateTimeFormatter;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import rometorio.Search;
+import sandbox.Search;
 import views.html.index;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -28,8 +28,7 @@ public class Application extends Controller {
     public static Result flightSearch(String origin, String destination, String departureDate){
     	ObjectNode out = Json.newObject();
     	DateTime departs = DATE_FORMAT.parseDateTime(departureDate);
-    	DateTime returns = departs.plusDays(15);
-		List<SearchResult> results = Search.flights(origin, destination, departs, returns);
+		List<SearchResult> results = Search.flights(origin, destination, departs);
     	ArrayNode aResults = out.putArray("results");
 		for (SearchResult r : results) {
 			aResults.add(r.toJSON());
