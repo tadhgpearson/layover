@@ -9,4 +9,7 @@ libraryDependencies ++= Seq(
   javaWs
 )     
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+lazy val root = (project in file(".")).enablePlugins(PlayJava).enablePlugins(SbtWeb)
+
+//Include LESS assets in compile
+includeFilter in (Assets, LessKeys.less) := "*.less"
